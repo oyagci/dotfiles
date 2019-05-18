@@ -1,0 +1,12 @@
+" Specify a directory for plugins
+" - For Neovim: ~/.local/share/nvim/plugged
+" - Avoid using standard Vim directory names like 'plugin'
+call plug#begin('~/.vim/plugged')
+Plug 'kien/ctrlp.vim'
+Plug 'w0rp/ale'
+Plug 'rafi/awesome-vim-colorschemes'
+call plug#end()
+
+colorscheme rdark-terminal2
+
+set number
