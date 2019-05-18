@@ -1,0 +1,17 @@
+# The following lines were added by compinstall
+
+zstyle ':completion:*' completer _expand _complete _ignored _correct _approximate
+zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}' 'r:|[._-/]=* r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*' max-errors 2
+zstyle :compinstall filename '/home/oyagci/.zshrc'
+
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+# Lines configured by zsh-newuser-install
+setopt appendhistory autocd nomatch notify
+bindkey -e
+# End of lines configured by zsh-newuser-install
+
+PROMPT='%B%T [%F{green}%n %~ %f%j] %(!.%%.$) %b'
+RPROMPT='%0(?. .%F{red}%?%f)'
