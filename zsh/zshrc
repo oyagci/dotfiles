@@ -13,5 +13,7 @@ setopt appendhistory autocd nomatch notify
 bindkey -e
 # End of lines configured by zsh-newuser-install
 
-PROMPT='%B%T [%F{green}%n %~ %f%j] %(!.%%.$) %b'
+source ~/.zsh-git-prompt/zshrc.sh
+
+PROMPT='%B%T [%F{green}%n %~ %f%j] $(git_super_status)%b %B%(!.%%.$) %b'
 RPROMPT='%0(?. .%F{red}%?%f)'
