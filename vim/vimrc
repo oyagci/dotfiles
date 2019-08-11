@@ -3,7 +3,7 @@
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
 Plug 'kien/ctrlp.vim'
-Plug 'w0rp/ale'
+" Plug 'w0rp/ale'
 Plug 'rafi/awesome-vim-colorschemes'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -11,12 +11,15 @@ Plug 'airblade/vim-gitgutter'
 Plug 'leafgarland/typescript-vim'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
+
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
 call plug#end()
 
 colorscheme rdark-terminal2
 
 let g:ale_fixers = {
-\	 '*' : [ 'remove_trailing_lines', 'trim_whitespaces' ],
+\	 '*' : [ 'remove_trailing_lines', 'trim_whitespace' ],
 \	 'c': [
 \		'clang-format',
 \	 ],
@@ -24,10 +27,43 @@ let g:ale_fixers = {
 
 set noexpandtab
 set sw=4 ts=4
-set updatetime=100
+set updatetime=500
 set number
 
 let g:airline_powerline_fonts = 1
 
 let g:gitgutter_sign_added = "│"
 let g:gitgutter_sign_modified = "│"
+
+" VIM Airline
+
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+" unicode symbols
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.whitespace = 'Ξ'
+
+" airline symbols
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = ''
+
+let g:airline#extensions#coc#enabled = 1
+
+" Highlight JSON comments
+autocmd FileType json syntax match Comment +\/\/.\+$+
