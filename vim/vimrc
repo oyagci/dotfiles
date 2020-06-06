@@ -7,23 +7,21 @@ Plug 'kien/ctrlp.vim'
 Plug 'rafi/awesome-vim-colorschemes'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'airblade/vim-gitgutter'
 Plug 'leafgarland/typescript-vim'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
-
+Plug 'bfrg/vim-cpp-modern'
+Plug 'justinmk/vim-syntax-extra'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
+Plug 'sheerun/vim-polyglot'
+Plug 'preservim/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'rhysd/vim-clang-format'
+Plug 'majutsushi/tagbar'
+Plug 'bling/vim-bufferline'
 call plug#end()
 
 colorscheme rdark-terminal2
-
-let g:ale_fixers = {
-\	 '*' : [ 'remove_trailing_lines', 'trim_whitespace' ],
-\	 'c': [
-\		'clang-format',
-\	 ],
-\ }
 
 set noexpandtab
 set sw=4 ts=4
@@ -67,3 +65,9 @@ let g:airline#extensions#coc#enabled = 1
 
 " Highlight JSON comments
 autocmd FileType json syntax match Comment +\/\/.\+$+
+
+map <C-n> :NERDTreeToggle<CR>
+nmap <C-\> :TagbarToggle<CR>
+
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.o
+set tags=./tags;./.git/tags
