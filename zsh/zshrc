@@ -39,3 +39,13 @@ export LESS_TERMCAP_us=$'\e[1;4;31m'
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+if ls --color -d . >/dev/null 2>&1; then  # GNU ls
+  export COLUMNS  # Remember columns for subprocesses.
+  eval "$(dircolors)"
+  function ls {
+    command ls -F -h --color=always -v --author --time-style=long-iso -C "$@" | less -R -X -F
+  }
+  alias ll='ls -l'
+  alias l='ls -l -a'
+fi
