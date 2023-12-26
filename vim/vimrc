@@ -3,14 +3,13 @@
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
 Plug 'kien/ctrlp.vim'
-" Plug 'w0rp/ale'
 Plug 'rafi/awesome-vim-colorschemes'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'leafgarland/typescript-vim'
-Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
-Plug 'bfrg/vim-cpp-modern'
+" Plug 'leafgarland/typescript-vim'
+" Plug 'pangloss/vim-javascript'
+" Plug 'mxw/vim-jsx'
+" Plug 'bfrg/vim-cpp-modern'
 Plug 'justinmk/vim-syntax-extra'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'sheerun/vim-polyglot'
@@ -18,11 +17,25 @@ Plug 'preservim/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'rhysd/vim-clang-format'
 Plug 'majutsushi/tagbar'
-Plug 'frazrepo/vim-rainbow'
-Plug 'preservim/nerdcommenter', {'tag': '2.5.2'}
-Plug 'mileszs/ack.vim'
+" Plug 'frazrepo/vim-rainbow'
+" Plug 'preservim/nerdcommenter', {'tag': '2.5.2'}
+" Plug 'mileszs/ack.vim'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-fugitive'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+" Plug 'davidhalter/jedi-vim'
+Plug 'joshdick/onedark.vim'
+Plug 'airblade/vim-gitgutter'
+Plug 'vim-scripts/taglist.vim'
+Plug 'sebdah/vim-delve'
+Plug 'fatih/vim-go'
+Plug 'Yggdroot/indentLine'
+" Plug 'airblade/vim-rooter'
+" Plug 'prettier/vim-prettier', {
+"   \ 'do': 'yarn install --frozen-lockfile --production',
+"   \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'svelte', 'yaml', 'html'] }
+Plug 'tpope/vim-vinegar'
 call plug#end()
 
 autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
@@ -30,12 +43,19 @@ autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+\%#\@<!$/
 highlight ExtraWhitespace ctermbg=red guibg=red
 
-colorscheme rdark-terminal2
+" colorscheme rdark-terminal2
+colorscheme onedark
 
 set noexpandtab
 set sw=4 ts=4
 set updatetime=500
 set number
+
+set wildmenu
+set wildmode=longest,list,full
+
+set undofile
+set undodir=/home/yourname/.vimundo/
 
 let g:airline_powerline_fonts = 1
 
@@ -80,7 +100,7 @@ map <C-n> :NERDTreeToggle<CR>
 nmap <C-\> :TagbarToggle<CR>
 
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.o
-set tags=./tags;./.git/tags
+set tags=./tags;./.git/tags;./.tags
 
 set hlsearch " Hightlight all search matches
 nmap <C-c> :nohl<CR>
@@ -112,16 +132,16 @@ endif
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
+" inoremap <silent><expr> <TAB>
+"       \ pumvisible() ? "\<C-n>" :
+"       \ <SID>check_back_space() ? "\<TAB>" :
+"       \ coc#refresh()
+" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+" 
+" function! s:check_back_space() abort
+"   let col = col('.') - 1
+"   return !col || getline('.')[col - 1]  =~# '\s'
+" endfunction
 
 
 " Use <c-space> to trigger completion.
@@ -166,3 +186,69 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
+
+autocmd BufWritePre *.go :silent call CocAction('runCommand', 'editor.action.organizeImport')
+autocmd FileType go nmap gtj :CocCommand go.tags.add json<cr>
+autocmd FileType go nmap gty :CocCommand go.tags.add yaml<cr>
+autocmd FileType go nmap gtx :CocCommand go.tags.clear<cr>
+autocmd FileType go nmap gtj :CocCommand go.tags.add bson<cr>
+
+let g:ctrlp_extensions = ['buffertag', 'tag', 'line', 'dir']
+
+set guifont=JetBrains\ Mono:h14
+
+set noerrorbells
+set novisualbell
+set t_vb=
+autocmd! GUIEnter * set vb t_vb=
+
+nmap <leader>t :TagbarToggle<cr>
+
+let g:go_debug_windows = {
+      \ 'vars':       'rightbelow 50vnew',
+      \ 'stack':      'rightbelow 10new',
+      \ }
+      " \ 'goroutines':      'rightbelow 10new',
+let g:go_debug_mappings = {
+      \ '(go-debug-continue)': {'key': 'c', 'arguments': '<nowait>'},
+      \ '(go-debug-next)': {'key': 'n', 'arguments': '<nowait>'},
+      \ '(go-debug-step)': {'key': 's'},
+	  \ '(go-debug-stepout)': {'key': 'o' },
+      \ '(go-debug-print)': {'key': 'p'},
+  \}
+
+map <leader>ds :GoDebugStart<cr>
+map <leader>lds :GoDebugStart localhost:
+map <leader>ds :GoDebugStop<cr>
+map <leader>db :GoDebugBreakpoint<cr>
+
+let g:go_fold_enable = ['block', 'import', 'varconst', 'package_comment']
+let g:go_highlight_whitespace_error = 1
+let g:go_highlight_chan_whitespace_error = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_space_tab_error = 1
+let g:go_highlight_trailing_whitespace_error = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_parameters = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_generate_tags = 1
+let g:go_highlight_string_spellcheck = 1
+let g:go_highlight_format_strings = 1
+let g:go_highlight_variable_declarations = 1
+let g:go_highlight_variable_assignments = 1
+let g:go_highlight_diagnostics_error = 1
+let g:go_highlight_diagnostic_warnings = 1
+
+map <leader>db :bp\|bd #<cr>
+
+inoremap <silent><expr> <tab> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<TAB>"
+inoremap <silent><expr> <cr> "\<c-g>u\<CR>"
+
+let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+
+map <leader>f :CocCommand editor.action.formatDocument<cr>
+map <leader>o :CocCommand editor.action.organizeImport<cr>
